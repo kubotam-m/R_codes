@@ -1,5 +1,24 @@
 #R color
 
+#plot sample
+library(RColorBrewer)
+sample_col <- brewer.pal(10,"Set3")
+png("categorical_sample_plot.png",width=400, height=400)
+barplot(runif(10),col=sample_col,names=1:10)
+dev.off()
+
+library("SDMTools")
+ n <- 250
+sample_col <- colorRamp(c("blue","yellow","red"),space="rgb")(runif(n))
+png("numeric_sample_plot.png", width=400, height=400)
+plot(rnorm(n), rnorm(n), col = apply(sample_col/256,1,function(x){rgb(x[[1]],x[[2]],x[[3]])}), xlim=c(-4,4),ylim=c(-4,4),xlab="x",ylab="y",pch=16,cex=0.8)
+pnts = cbind(x =c(2.5,3,3,2.5), y =c(3,3,2,2))
+legend.gradient(pnts,
+	cols=apply(colorRamp(c("blue","yellow","red"),space="rgb")(0:100/100)/256,1,function(x){rgb(x[[1]],x[[2]],x[[3]])}),
+	limits=c(0,1),
+	title=""
+)
+dev.off()
 #Rで定義されている色名と対応する色を調べる
 length(colors())
 #657
@@ -141,3 +160,90 @@ col_l <- pal4(25)
 png("colorRamp_ex2.png")
 barplot(1:25, names=1:25,col=col_l)
 dev.off()
+
+#colorRampsを使う
+library("colorRamps")
+png("colorRamps_ex1.png")
+plot(c(0,1),c(0,1),type="n",
+	xlim=c(-0.5,1), ylim=c(12,0), axes=F, frame.plot=F, asp=0.1,
+	xlab="", ylab="")
+
+n=15
+y=0
+text(1:n/n + 1/(2*n),rep(-0.5,n),label=1:n)
+tmp_col = blue2red(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="blue2red")
+y <- y+1
+
+tmp_col = blue2green(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="blue2green")
+y <- y+1
+tmp_col = green2red(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="green2red")
+y <- y+1
+tmp_col = blue2yellow(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="blue2yellow")
+y <- y+1
+tmp_col = cyan2yellow(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="cyan2yellow")
+y <- y+1
+tmp_col = magenta2green(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="magenta2green")
+y <- y+1
+tmp_col = matlab.like(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="matlab.like")
+y <- y+1
+tmp_col = matlab.like2(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="matlab.like2")
+y <- y+1
+tmp_col = blue2green2red(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="blue2green2red")
+y <- y+1
+tmp_col = primary.colors(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="primary.colors")
+y <- y+1
+tmp_col = rgb.tables(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="rgb.tables")
+y <- y+1
+tmp_col = ygobb(n)
+for(i in 1:n/n){
+		rect(i,y,i+1/n,y+1,col=tmp_col[[i*n]],border="transparent")
+}
+text(-0.2,y+0.5,label="ygobb")
+y <- y+1
+
+dev.off()
+
